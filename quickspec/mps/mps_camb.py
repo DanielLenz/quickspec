@@ -1,10 +1,11 @@
 from __future__ import print_function
 
 import numpy as np
-import scipy.interpolate
+from scipy import interpolate
 
-import quickspec as qs
-import mps
+from .. import quickspec as qs
+from . import mps
+from .. import util
 
 zvec_high = np.linspace(2048, 11, 20)
 zvec_low = np.linspace(10, 0, 60)
@@ -62,7 +63,7 @@ class mps_lin_camb(mps.mps_lin):
         for iz, z in enumerate(self.arr_z):
             self.mat_p[iz, :] *= (1. + z)**2
 
-        self.spl_p = scipy.interpolate.RectBivariateSpline(
+        self.spl_p = interpolate.RectBivariateSpline(
             self.arr_z, np.log(self.arr_k), self.mat_p, kx=3, ky=3, s=0)
 
         self.kmin = self.arr_k[+0] * 0.999
@@ -83,7 +84,7 @@ class mps_lin_camb(mps.mps_lin):
         assert(np.all(z >= self.zmin))
         assert(np.all(z <= self.zmax))
 
-        k, z, s = qs.util.pair(k, z)
+        k, z, s = util.pair(k, z)
         ret = self.spl_p.ev(z, np.log(k))
         ret /= (1. + z)**2
         return ret.reshape(s)

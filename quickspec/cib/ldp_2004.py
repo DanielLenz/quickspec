@@ -1,13 +1,13 @@
 # CIB number counts from Lagache, Dole, Puget (2004), astro-ph/0209115
 
 from __future__ import print_function
-
 import os
-import numpy as np
 
-import scipy.io
+import numpy as np
+from scipy.io import idl
 
 import quickspec as qs
+from quickspec import util, interp
 
 basedir = os.environ.get(
     'QUICKSPEC_DATA', os.path.dirname(qs.__file__) + "/data") + "/LDP_2004/"
@@ -46,23 +46,23 @@ class counts(object):
         if not os.path.exists(basedir + tfname):
             if not os.path.exists(basedir):
                 os.makedirs(basedir)
-            qs.util.download(
+            util.download(
                 "http://www.ias.u-psud.fr/irgalaxies/Model/save/" +
                 tfname, basedir + tfname)
 
-        sav = scipy.io.idl.readsav(basedir + tfname)
+        sav = idl.readsav(basedir + tfname)
 
         self.zs = sav['z']          # redshift
         self.ls = sav['lum_array']  # luminosity L
         self.slz = sav['slz']        # flux in Jy [z, L]
 
-        self.dz = qs.util.deriv(self.zs)
-        self.dlnl = qs.util.deriv(np.log(self.ls))
+        self.dz = util.deriv(self.zs)
+        self.dlnl = util.deriv(np.log(self.ls))
 
         self.dndlnldz = sav['dndlnldz']
         self.dslz = np.zeros(np.shape(self.slz))
         for iz, z in enumerate(self.zs):
-            self.dslz[iz, :] = qs.util.deriv(self.slz[iz, :])
+            self.dslz[iz, :] = util.deriv(self.slz[iz, :])
 
         self.loaded = nu
 
@@ -82,7 +82,7 @@ class counts(object):
             if (self.slz[iz, si_min] > s) or (self.slz[iz, si_max - 1] < s):
                 continue
 
-            ret += self.dz[iz] * qs.interp.lagrange(
+            ret += self.dz[iz] * interp.lagrange(
                 s,
                 self.slz[iz, si_min:si_max],
                 self.dndlnldz[iz, si_min:si_max] *
@@ -123,5 +123,5 @@ class counts(object):
                     self.slz[iz, sidx] *
                     self.dndlnldz[iz, sidx]))
 
-        return (1. + z) * qs.interp.lagrange(
+        return (1. + z) * interp.lagrange(
             z, np.array(zs), np.array(rs)) * cosmo.H_z(z) / 3.e5

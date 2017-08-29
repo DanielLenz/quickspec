@@ -1,9 +1,8 @@
 import numpy as np
+from scipy import integrate, interpolate
 
-import scipy.integrate
-import scipy.interpolate
-
-import quickspec as qs
+from .. import util
+from ..mps import mps
 
 
 class hod_cib_pep():
@@ -24,9 +23,9 @@ class hod_cib_pep():
         self.zvec = np.linspace(0, 1300., 10000)
         self.lnnvec = np.zeros(len(self.zvec))
 
-        for iz, z in qs.util.enumerate_progress(
+        for iz, z in util.enumerate_progress(
                 self.zvec, "halo::hod::sat::init"):
-            tn = scipy.integrate.quad(
+            tn = integrate.quad(
                     lambda lnm: (
                         self.mf.dndM_mz(np.exp(lnm), z) *
                         self.ngal(np.exp(lnm), z) *
@@ -36,7 +35,7 @@ class hod_cib_pep():
 
             self.lnnvec[iz] = np.log(max(tn, 1.3e-87))
 
-        self.spl_lnn = scipy.interpolate.UnivariateSpline(
+        self.spl_lnn = interpolate.UnivariateSpline(
             self.zvec, self.lnnvec, k=3, s=0)
 
         self.zmin = np.min(self.zvec)
@@ -52,12 +51,12 @@ class hod_cib_pep():
         return self.ncen(m, z) + self.nsat(m, z)
 
     def ncen(self, m, z):
-        return 0.5 * (1. + scipy.special.erf(
+        return 0.5 * (1. + special.erf(
             np.log10(m / self.Mmin) / self.slogM))
 
     def nsat(self, m, z):
         return (0.5 * (
-            1. + scipy.special.erf(np.log10(0.5 * m / self.Mmin) / self.slogM)) *
+            1. + special.erf(np.log10(0.5 * m / self.Mmin) / self.slogM)) *
             (m / self.Msat)**self.asat)
 
     def hod_1h(self, m, z):
@@ -72,7 +71,7 @@ class hod_cib_pep():
         return ngal / nbar
 
 
-class model_cib_x_phi(qs.mps.mps):
+class model_cib_x_phi(mps.mps):
     def __init__(self, mass_function, halo_profile, hod, p_lin):
         self.mass_function = mass_function
         self.halo_profile = halo_profile
@@ -94,7 +93,7 @@ class model_cib_x_phi(qs.mps.mps):
                 (self.hod.ngal(m, z) / self.hod.nbar(z)) *
                 (m / self.rho_M0) * self.halo_profile.u_km(k, m, z)**2)
 
-        return scipy.integrate.quad(
+        return integrate.quad(
             integrand,
             np.log(self.mass_function.Mmin),
             np.log(self.mass_function.Mmax))[0]
@@ -109,7 +108,7 @@ class model_cib_x_phi(qs.mps.mps):
                 self.halo_profile.u_km(k, m, z))
         # assume \int dM dN/dM b(M) M/\rho u(k,M) = 1
 
-        return scipy.integrate.quad(
+        return integrate.quad(
             integrand_dg,
             np.log(self.mass_function.Mmin),
             np.log(self.mass_function.Mmax))[0] * self.p_lin.p_kz(k, z)

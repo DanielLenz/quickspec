@@ -16,12 +16,12 @@ if not _ASTROPY_SETUP_:
     from .example_mod import *
 
 from .quickspec import *
-
 from . import util
 from . import units
 from . import interp
 from . import cosmo
-from . import mps
-from . import cib
 from . import lens
 from . import gals
+
+from . import mps
+from . import cib

@@ -2,7 +2,7 @@ import numpy as np
 import scipy.integrate
 import scipy.interpolate
 
-import units
+from . import units
 
 
 class lcdm():
@@ -23,7 +23,8 @@ class lcdm():
        """
 
         # check for flatness
-        assert((omb + omc + omr + oml) == 1.0)
+        if not ((omb + omc + omr + oml) == 1.0):
+            raise ValueError('Sum of densities must be equal to 1.')
 
         self.omr = omr  # radiation
         self.omb = omb  # baryons

@@ -1,5 +1,4 @@
-import halo
-
-import hall
-import ldp_2004
-import bethermin_2011
+from . import halo
+from . import hall
+from . import ldp_2004
+from . import bethermin_2011

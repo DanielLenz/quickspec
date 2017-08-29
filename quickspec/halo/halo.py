@@ -1,15 +1,13 @@
 import numpy as np
+from scipy import import integrate, interpolate
 
-import scipy.integrate
-import scipy.interpolate
-
-import quickspec as qs
+from .. import quickspec as qs
 
 
 class halo_model(qs.mps.mps):
     """
     Base class for encapsulating a halo model for large scale structure
-    See Cooray and Sheth 2002 http://arxiv.org/abs/astro-ph/0206508.
+    See Cooray and Sheth (2002, http://arxiv.org/abs/astro-ph/0206508).
 
     """
 
@@ -32,7 +30,7 @@ class halo_model(qs.mps.mps):
                 m * self.mass_function.dndM_mz(m, z) * self.hod.hod_1h(m, z) *
                 self.halo_profile.u_km(k, m, z)**2)
 
-        return scipy.integrate.quad(
+        return integrate.quad(
             integrand,
             np.log(self.mass_function.Mmin),
             np.log(self.mass_function.Mmax))[0]
@@ -46,7 +44,7 @@ class halo_model(qs.mps.mps):
                 self.hod.hod_2h(m, z) * self.mass_function.b_mz(m, z) *
                 self.halo_profile.u_km(k, m, z))
 
-        return scipy.integrate.quad(
+        return integrate.quad(
             integrand,
             np.log(self.mass_function.Mmin),
             np.log(self.mass_function.Mmax))[0]**2. * self.p_lin.p_kz(k, z)
@@ -89,12 +87,12 @@ class halo_model_cache(halo_model):
                 self.mat_lnp_kz_2h[ik, iz] = (
                     np.log(mod.p_kz_2h(k, z) / mod.p_lin.p_kz(k, z)))
 
-        self.spl_lnp_kz_1h = scipy.interpolate.RectBivariateSpline(
+        self.spl_lnp_kz_1h = interpolate.RectBivariateSpline(
             self.vec_lnk,
             self.vec_z,
             self.mat_lnp_kz_1h, kx=3, ky=3, s=0)
 
-        self.spl_lnp_kz_2h = scipy.interpolate.RectBivariateSpline(
+        self.spl_lnp_kz_2h = interpolate.RectBivariateSpline(
             self.vec_lnk,
             self.vec_z,
             self.mat_lnp_kz_2h, kx=3, ky=3, s=0)

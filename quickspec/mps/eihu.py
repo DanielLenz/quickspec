@@ -5,7 +5,7 @@
 
 import numpy as np
 
-import mps
+from . import mps
 
 
 class mps_lin_eihu(mps.mps_lin):

@@ -1,10 +1,8 @@
 import numpy as np
+from scipy import interpolate, optimize
 
-import scipy.optimize
-import scipy.interpolate
-
-import quickspec as qs
-import mps
+from .. import quickspec as qs
+from . import mps
 
 
 class mps_pd(mps.mps):
@@ -47,11 +45,11 @@ class mps_pd(mps.mps):
                     self.arr_k, label="mps::pd::init"):
                 for iz, z in enumerate(self.arr_z):
                     self.mat_lnkl[ik, iz] = np.log(
-                        scipy.optimize.bisect(
+                        optimize.bisect(
                             lambda tk: (self.knl(tk, z) - k),
                             kmin * 0.1,
                             kmax * 10.))
-            self.spl_lnkl = scipy.interpolate.RectBivariateSpline(
+            self.spl_lnkl = interpolate.RectBivariateSpline(
                 np.log(self.arr_k), self.arr_z, self.mat_lnkl, kx=3, ky=3, s=0)
 
     def p_kz(self, k, z):
@@ -60,7 +58,7 @@ class mps_pd(mps.mps):
         if self.cache is True:
             kl = np.exp(self.spl_lnkl.ev(np.log(k), z))
         else:
-            kl = np.array([scipy.optimize.bisect(
+            kl = np.array([optimize.bisect(
                 lambda ttk: (self.knl(ttk, tz) - tk),
                 self.kmin,
                 self.kmax) for (tk, tz) in zip(k, z)])

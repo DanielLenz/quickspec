@@ -6,14 +6,14 @@ from Hall et. al. 2010 (arxiv:0912.4315)
 
 import numpy as np
 
-import quickspec as qs
+from .. import units
 
 alpha_mid_ir = -2.
 nu_mid_ir = 4954611330474.7109
 
 
 def ssed_graybody(nu, Td=34., beta=2):
-    return nu**(beta) * qs.units.planck(nu, Td)
+    return nu**(beta) * units.planck(nu, Td)
 
 
 def ssed(nu, Td=34., beta=2., alpha_mid_ir=alpha_mid_ir, nu_mid_ir=nu_mid_ir):

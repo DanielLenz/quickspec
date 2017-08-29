@@ -12,6 +12,28 @@ recursive-include licenses *
 recursive-include cextern *
 recursive-include scripts *
 
+# include the CIB resources
+
+# Lagache, Dole, Puget (2004)
+include quickspec/cib/data/LDP_2004/create_counts_2097_Omega_lambda.cold.save
+include quickspec/cib/data/LDP_2004/create_counts_2097_Omega_lambda.save
+include quickspec/cib/data/LDP_2004/create_counts_1380_Omega_lambda.cold.save
+include quickspec/cib/data/LDP_2004/create_counts_1380_Omega_lambda.save
+include quickspec/cib/data/LDP_2004/create_counts_850_Omega_lambda.cold.save
+include quickspec/cib/data/LDP_2004/create_counts_850_Omega_lambda.save
+include quickspec/cib/data/LDP_2004/create_counts_550_Omega_lambda.cold.save
+include quickspec/cib/data/LDP_2004/create_counts_550_Omega_lambda.save
+include quickspec/cib/data/LDP_2004/create_counts_350_Omega_lambda.cold.save
+include quickspec/cib/data/LDP_2004/create_counts_350_Omega_lambda.save
+include quickspec/cib/data/LDP_2004/create_counts_250_Omega_lambda.cold.save
+include quickspec/cib/data/LDP_2004/create_counts_250_Omega_lambda.save
+
+# Bethermin (2011)
+include quickspec/cib/data/Bethermin_2011_jbar/j_z_217GHz.dat
+include quickspec/cib/data/Bethermin_2011_jbar/j_z_353GHz.dat
+include quickspec/cib/data/Bethermin_2011_jbar/j_z_545GHz.dat
+include quickspec/cib/data/Bethermin_2011_jbar/j_z_857GHz.dat
+
 prune build
 prune docs/_build
 prune docs/api

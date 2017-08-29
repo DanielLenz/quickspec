@@ -1,5 +1,5 @@
 import numpy as np
-import scipy.integrate
+from scipy import integrate
 
 
 def w_k_tophat(k):
@@ -52,7 +52,7 @@ class mps():
 
         dlnk = (np.log(self.kmax) - np.log(self.kmin)) / nk
         lnks = np.arange(0, nk) * dlnk + np.log(self.kmin)
-        sigma2 = scipy.integrate.simps(integrand(lnks), dx=dlnk)
+        sigma2 = integrate.simps(integrand(lnks), dx=dlnk)
         sigma2 *= 9. / (r**3 * 2. * np.pi**2)
 
         return np.sqrt(sigma2)
@@ -74,7 +74,7 @@ class mps():
 
         dlnk = (np.log(self.kmax) - np.log(self.kmin)) / nk
         lnks = np.arange(0, nk) * dlnk + np.log(self.kmin)
-        dsigma2 = scipy.integrate.simps(integrand(lnks), dx=dlnk)
+        dsigma2 = integrate.simps(integrand(lnks), dx=dlnk)
         dsigma2 *= 3. / (r**4 * np.pi**2)
 
         return dsigma2
@@ -95,7 +95,7 @@ class mps():
                 1. / x**2 * k1.w_lxz(l, x, z) *
                 k2.w_lxz(l, x, z) * self.p_kz(l / x, z))
 
-        return scipy.integrate.quad(integrand, xmin, xmax, limit=100)[0]
+        return integrate.quad(integrand, xmin, xmax, limit=100)[0]
 
     def cl_limber_z(self, l, k1, k2=None, zmin=0.0, zmax=1100.):
         """
@@ -113,7 +113,7 @@ class mps():
                 1. / x**2 / self.cosmo.H_z(z) * 3.e5 * k1.w_lxz(l, x, z) *
                 k2.w_lxz(l, x, z) * self.p_kz(l / x, z))
 
-        return scipy.integrate.quad(integrand, zmin, zmax, limit=100)[0]
+        return integrate.quad(integrand, zmin, zmax, limit=100)[0]
 
 
 class mps_lin(mps):

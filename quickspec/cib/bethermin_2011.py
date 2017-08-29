@@ -4,12 +4,11 @@ from __future__ import print_function
 
 import os
 import subprocess
+
 import numpy as np
+from scipy import io, interpolate
 
-import scipy.io
-import scipy.interpolate
-
-import quickspec as qs
+from .. import quickspec as qs
 
 basedir = os.environ.get(
     'QUICKSPEC_DATA',
@@ -42,7 +41,7 @@ class counts():
                 "http://www.ias.u-psud.fr/irgalaxies/Model/save/" +
                 tfname + ".gz", basedir + tfname + ".gz")
             subprocess.call(['gunzip', basedir + tfname + ".gz"])
-        sav = scipy.io.idl.readsav(basedir + tfname)
+        sav = io.idl.readsav(basedir + tfname)
 
         self.ls = sav['lambda']
         self.zs = sav['z']
@@ -144,7 +143,7 @@ class jbar_pep():
                 os.path.dirname(__file__) +
                 "/data/Bethermin_2011_jbar/j_z_" + frq + "GHz.dat")
 
-            self.counts_spl[float(frq) * 1.e9] = scipy.interpolate.UnivariateSpline(
+            self.counts_spl[float(frq) * 1.e9] = interpolate.UnivariateSpline(
                 dat[:, 0].flatten(),
                 dat[:, 1].flatten(),
                 k=3, s=0)

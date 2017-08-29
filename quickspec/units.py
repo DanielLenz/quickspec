@@ -1,5 +1,4 @@
 import numpy as np
-import pylab as pl
 
 # constants
 h = 6.626068e-34   # J.s planck constant

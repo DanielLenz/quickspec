@@ -1,11 +1,9 @@
 # Fitting formulae for linear matter power spectra in CDM + Baryon cosmologies, from Bardeen, Bond, Kaiser, Szalay (1986)
 
 import numpy as np
+from scipy import interpolate
 
-import scipy.interpolate
-
-import quickspec as qs
-import mps
+from . import mps
 
 
 class mps_lin_bbks(mps.mps_lin):
@@ -30,7 +28,7 @@ class mps_lin_bbks(mps.mps_lin):
             256., 512., 1300.])
         self.arr_h = np.array([
             self.cosmo.G_z(z)**2 * (1. + z)**2 for z in self.arr_z])
-        self.spl_h = scipy.interpolate.UnivariateSpline(
+        self.spl_h = interpolate.UnivariateSpline(
             self.arr_z, self.arr_h, k=3, s=0)
 
         self.norm = 1.0
