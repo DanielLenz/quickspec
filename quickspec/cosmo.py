@@ -81,7 +81,7 @@ class lcdm():
 
     def x_z(self, z):
         """
-        Returns the conformal distance (in Mpc) to redshift z.
+        Returns the comoving distance (in Mpc) to redshift z.
 
         """
 
@@ -92,7 +92,7 @@ class lcdm():
 
     def z_x(self, x):
         """
-        Returns the redshift z at conformal distance x (in Mpc).
+        Returns the redshift z at comoving distance x (in Mpc).
 
         """
 

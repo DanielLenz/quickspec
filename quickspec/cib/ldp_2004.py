@@ -7,7 +7,7 @@ import numpy as np
 from scipy.io import idl
 
 import quickspec as qs
-from quickspec import util, interp
+from .. import util, interp
 
 basedir = os.environ.get(
     'QUICKSPEC_DATA', os.path.dirname(qs.__file__) + "/data") + "/LDP_2004/"
