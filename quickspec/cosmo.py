@@ -1,6 +1,5 @@
 import numpy as np
-import scipy.integrate
-import scipy.interpolate
+from scipy import interpolate, integrate
 
 from . import units
 
