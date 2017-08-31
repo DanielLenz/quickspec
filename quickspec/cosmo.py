@@ -42,7 +42,7 @@ class lcdm():
 
         # vector of comoving distance
         self.xvec = np.array([
-            scipy.integrate.quad(
+            integrate.quad(
                 lambda z: (units.c * 1.e-3) / self.H_z(z), 0., zmax)[0]
             for zmax in self.zvec])
 
@@ -52,9 +52,9 @@ class lcdm():
         self.xmax = np.max(self.xvec)
 
         # conversions between conformal distance to redshift
-        self.spl_x_z = scipy.interpolate.UnivariateSpline(
+        self.spl_x_z = interpolate.UnivariateSpline(
             self.zvec, self.xvec, k=3, s=0)
-        self.spl_z_x = scipy.interpolate.UnivariateSpline(
+        self.spl_z_x = interpolate.UnivariateSpline(
             self.xvec, self.zvec, k=3, s=0)
 
     def t_z(self, z):
@@ -74,7 +74,7 @@ class lcdm():
 
         lower = 1.e-10
         upper = 1. / (1. + z)
-        t_z = scipy.integrate.quad(get_age, lower, upper)[0] / 1.e9
+        t_z = integrate.quad(get_age, lower, upper)[0] / 1.e9
 
         return t_z
 
@@ -130,7 +130,7 @@ class lcdm():
 
         """
         if np.isscalar(z) or (np.size(z) == 1):
-            integral = scipy.integrate.quad(
+            integral = integrate.quad(
                 lambda a: (self.H0 / (a * self.H_a(a)))**3,
                 0,
                 1. / (1. + z))[0]
