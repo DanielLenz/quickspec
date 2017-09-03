@@ -16,10 +16,13 @@ sudo: false
 
 addons:
     apt:
+        sources:
+            - ubuntu-toolchain-r-test
         packages:
             - graphviz
             - texlive-latex-extra
             - dvipng
+            - gfortran-6
 env:
     global:
 
@@ -123,7 +126,7 @@ matrix:
           env: MAIN_CMD='pycodestyle quickspec --count' SETUP_CMD=''
 
 before_install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; else apt-get gfortran-6; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; fi
 
 install:
     # Install CAMB and its python wrapper
