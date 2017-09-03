@@ -22,7 +22,7 @@ addons:
             - graphviz
             - texlive-latex-extra
             - dvipng
-            - gfortran-6
+            - gfortran-5
 env:
     global:
 
