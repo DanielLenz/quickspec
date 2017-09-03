@@ -133,7 +133,8 @@ before_install:
 install:
     # Install CAMB and its python wrapper
     - git clone https://github.com/cmbant/CAMB.git
-    - pushd CAMB && make && cd pycamb && python setup.py install && popd
+    - pushd CAMB && make && popd
+    - pushd CAMB/pycamb && python setup.py install && popd
 
     # We now use the ci-helpers package to set up our testing environment.
     # This is done by using Miniconda and then using conda and pip to install
