@@ -123,7 +123,7 @@ matrix:
           env: MAIN_CMD='pycodestyle quickspec --count' SETUP_CMD=''
 
 before_install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; else sudo apt-get gfortran-6; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; else apt-get gfortran-6; fi
 
 install:
     # Install CAMB and its python wrapper
