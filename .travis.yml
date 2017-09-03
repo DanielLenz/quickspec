@@ -20,6 +20,7 @@ addons:
             - graphviz
             - texlive-latex-extra
             - dvipng
+            - gfortran
 
 env:
     global:
@@ -124,13 +125,12 @@ matrix:
           env: MAIN_CMD='pycodestyle quickspec --count' SETUP_CMD=''
 
 before_install:
-    # Install CAMB and its python wrapper
-    - git clone https://github.com/cmbant/CAMB.git
-    - cd CAMB
-    - make
-    - python pycamb/setup.py install
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; fi
 
 install:
+    # Install CAMB and its python wrapper
+    - git clone https://github.com/cmbant/CAMB.git
+    - pushd CAMB && make && cd pycamb && python setup.py install && popd
 
     # We now use the ci-helpers package to set up our testing environment.
     # This is done by using Miniconda and then using conda and pip to install
