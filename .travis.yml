@@ -128,7 +128,7 @@ before_install:
     - git clone https://github.com/cmbant/CAMB.git
     - cd CAMB
     - make
-    - python setup.py install
+    - python pycamb/setup.py install
 
 install:
 
