@@ -8,7 +8,8 @@ import subprocess
 import numpy as np
 from scipy import io, interpolate
 
-from .. import quickspec as qs
+import quickspec as qs
+from .. import interp, util
 
 basedir = os.environ.get(
     'QUICKSPEC_DATA',
@@ -37,7 +38,7 @@ class counts():
         if not os.path.exists(basedir + tfname):
             if not os.path.exists(basedir):
                 os.makedirs(basedir)
-            qs.util.download(
+            util.download(
                 "http://www.ias.u-psud.fr/irgalaxies/Model/save/" +
                 tfname + ".gz", basedir + tfname + ".gz")
             subprocess.call(['gunzip', basedir + tfname + ".gz"])
@@ -48,8 +49,8 @@ class counts():
         self.ss = sav['snu']
         self.dndsdz = sav['dndsnudz_arr']  # [ l, z, s ]
 
-        self.ds = qs.util.deriv(self.ss)
-        self.dz = qs.util.deriv(self.zs)
+        self.ds = util.deriv(self.ss)
+        self.dz = util.deriv(self.zs)
 
         # Note: Assign
         #    143 -> 2100 rather than 2097
@@ -86,7 +87,7 @@ class counts():
             else:
                 rs.append(np.sum(self.dz[zidx] * self.dndsdz[il, zidx, si]))
 
-        return qs.interp.lagrange(s, np.array(ss), np.array(rs))
+        return interp.lagrange(s, np.array(ss), np.array(rs))
 
     def jbar(self, nu, z, smax=None, cosmo=None):
         # \bar{j}(nu, z) = (1+z) \int_0^{Scut} dS S [d^2N/dSdz]
@@ -119,7 +120,7 @@ class counts():
                         self.ss[sidx] *
                         self.dndsdz[il, iz, :][sidx]))
 
-        return (1. + z) * qs.interp.lagrange(
+        return (1. + z) * interp.lagrange(
             z, np.array(zs), np.array(rs)) * cosmo.H_z(z) / 3.e5
 
 

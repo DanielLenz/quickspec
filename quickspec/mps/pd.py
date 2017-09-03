@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import interpolate, optimize
 
-from .. import quickspec as qs
+from .. import util
 from . import mps
 
 
@@ -41,7 +41,7 @@ class mps_pd(mps.mps):
 
             self.mat_lnkl = np.zeros((len(self.arr_k), len(self.arr_z)))
 
-            for ik, k in qs.util.enumerate_progress(
+            for ik, k in util.enumerate_progress(
                     self.arr_k, label="mps::pd::init"):
                 for iz, z in enumerate(self.arr_z):
                     self.mat_lnkl[ik, iz] = np.log(
@@ -53,7 +53,7 @@ class mps_pd(mps.mps):
                 np.log(self.arr_k), self.arr_z, self.mat_lnkl, kx=3, ky=3, s=0)
 
     def p_kz(self, k, z):
-        k, z, s = qs.util.pair(k, z)
+        k, z, s = util.pair(k, z)
 
         if self.cache is True:
             kl = np.exp(self.spl_lnkl.ev(np.log(k), z))
@@ -75,7 +75,7 @@ class mps_pd(mps.mps):
         logks = np.log(0.5 * k * np.array([0.999, 1.0, 1.001]))
         logps = np.log(self.mps.p_kz(np.exp(logks), z))
 
-        tn = 1. + qs.util.deriv(logks, logps)[1] / 3.
+        tn = 1. + util.deriv(logks, logps)[1] / 3.
 
         A = 0.482 * tn**(-0.947)
         B = 0.226 * tn**(-1.778)

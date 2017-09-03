@@ -3,7 +3,6 @@ from __future__ import print_function
 import numpy as np
 from scipy import interpolate
 
-from .. import quickspec as qs
 from . import mps
 from .. import util
 
@@ -57,8 +56,8 @@ class mps_lin_camb(mps.mps_lin):
             minkh=1e-6, maxkh=kmax, npoints=npoints)
         kh, z, pk = camb_data.get_matter_power_spectrum(
             minkh=1e-6, maxkh=kmax, npoints=npoints)
-        self.arr_z = z
-        self.arr_k = kh * (self.cosmo.h)
+        self.arr_z = np.array(z)
+        self.arr_k = np.array(kh * (self.cosmo.h))
         self.mat_p = pk / (self.cosmo.h)**3
         for iz, z in enumerate(self.arr_z):
             self.mat_p[iz, :] *= (1. + z)**2
@@ -75,7 +74,7 @@ class mps_lin_camb(mps.mps_lin):
     def p_kz(self, k, z):
         """
         Returns the amplitude of the matter power spectrum at
-        wavenumber k (in Mpc^{-1}) and conformal distance x (in Mpc).
+        wavenumber k (in Mpc^{-1}) and redshift z.
 
         """
 

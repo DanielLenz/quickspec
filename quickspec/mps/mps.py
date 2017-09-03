@@ -99,7 +99,7 @@ class mps():
 
         return dsigma2
 
-    def cl_limber_x(self, l, k1, k2=None, xmin=0.0, xmax=13000.):
+    def cl_limber_xl(self, l, k1, k2=None, xmin=0.0, xmax=13000.):
         """
         Calculate the cross-spectrum at multipole l between kernels k1 and
         k2 in the limber approximation. The distance integral is performed
@@ -117,7 +117,21 @@ class mps():
 
         return integrate.quad(integrand, xmin, xmax, limit=100)[0]
 
-    def cl_limber_z(self, l, k1, k2=None, zmin=0.0, zmax=1100.):
+    def cl_limber_x(
+            self,
+            k1, k2=None,
+            ls=None,
+            xmin=0., xmax=13000.):
+
+        if ls is None:
+            ls = np.arange(20, 2048, 20)
+
+        powerspec = np.array([
+            self.cl_limber_xl(l, k1, k2, xmin, xmax) for l in ls])
+
+        return powerspec
+
+    def cl_limber_zl(self, l, k1, k2=None, zmin=0.0, zmax=1100.):
         """
         Calculate the cross-spectrum at multipole l between kernels k1 and k2
         in the limber approximation. The distance integral is performed from
@@ -134,6 +148,20 @@ class mps():
                 k2.w_lxz(l, x, z) * self.p_kz(l / x, z))
 
         return integrate.quad(integrand, zmin, zmax, limit=100)[0]
+
+    def cl_limber_z(
+            self,
+            k1, k2=None,
+            ls=None,
+            zmin=0., zmax=1100.):
+
+        if ls is None:
+            ls = np.arange(20, 2048, 20)
+
+        powerspec = np.array([
+            self.cl_limber_zl(l, k1, k2, zmin, zmax) for l in ls])
+
+        return powerspec
 
 
 class mps_lin(mps):

@@ -15,7 +15,6 @@ if not _ASTROPY_SETUP_:
 
     from .example_mod import *
 
-from .quickspec import *
 from . import util
 from . import units
 from . import interp
