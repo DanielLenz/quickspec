@@ -23,6 +23,7 @@ addons:
             - texlive-latex-extra
             - dvipng
             - gfortran-6
+            - gcc-6
 
 env:
     global:
@@ -129,9 +130,12 @@ matrix:
 before_install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; fi
     - export FC=gfortran-6
+    - export CC=gcc-6
     - which gfortran-6
     - echo $FC
+    - ln gfortran gfortran-6
     - gfortran -dumpversion
+    - which gfortran
 
 install:
     # Install CAMB and its python wrapper
