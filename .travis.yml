@@ -131,6 +131,7 @@ before_install:
     - export FC=gfortran-6
     - which gfortran-6
     - echo $FC
+    - gfortran -dumpversion
 
 install:
     # Install CAMB and its python wrapper
