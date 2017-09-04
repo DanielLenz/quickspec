@@ -133,7 +133,7 @@ before_install:
     - export CC=gcc-6
     - which gfortran-6
     - echo $FC
-    - ln gfortran gfortran-6
+    - ln -s gfortran-6 gfortran
     - gfortran -dumpversion
     - which gfortran
 
