@@ -129,7 +129,6 @@ matrix:
 before_install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; fi
     - export FC=gfortran-6
-    - which gfortran
     - which gfortran-6
     - echo $FC
 
