@@ -9,11 +9,11 @@ class TestLCDM():
     lcdm = cosmo.lcdm()
 
     def test_initvals(self):
-        assert(self.lcdm.omr, 0.)
-        assert(self.lcdm.omb, 0.05)
-        assert(self.lcdm.omc, 0.25)
-        assert(self.lcdm.oml, 0.7)
-        assert(self.lcdm.H0, 70.)
+        assert self.lcdm.omr == 0.
+        assert self.lcdm.omb == 0.05
+        assert self.lcdm.omc == 0.25
+        assert self.lcdm.oml == 0.7
+        assert self.lcdm.H0 == 70.
 
     def vectors(self):
         assert(np.all(self.lcdm.zvec >= 0))
@@ -34,15 +34,15 @@ class TestLCDM():
 
     def test_H(self):
         # H_a
-        assert(self.lcdm.H_a(1.),  self.lcdm.H0)
+        assert self.lcdm.H_a(1.) ==  self.lcdm.H0
         testing.assert_almost_equal(self.lcdm.H_a(0.5),  123.24771803161305)
 
         # H_z
-        assert(self.lcdm.H_z(0.), self.lcdm.H0)
+        assert self.lcdm.H_z(0.) == self.lcdm.H0
         testing.assert_almost_equal(self.lcdm.H_z(10),  1400)
 
         # H_x
-        assert(self.lcdm.H_x(0.),  self.lcdm.H0)
+        assert self.lcdm.H_x(0.) == self.lcdm.H0
         testing.assert_almost_equal(self.lcdm.H_x(1000), 79.286040172939693)
 
     def test_G(self):
