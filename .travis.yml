@@ -129,13 +129,9 @@ matrix:
 
 before_install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo ln -s /usr/bin/gfortran-6 /usr/local/bin/gfortran; fi
     - export FC=gfortran-6
     - export CC=gcc-6
-    - which gfortran-6
-    - echo $FC
-    - sudo ln -s /usr/bin/gfortran-6 /usr/local/bin/gfortran
-    - gfortran -dumpversion
-    - which gfortran
 
 install:
     # Install CAMB and its python wrapper
