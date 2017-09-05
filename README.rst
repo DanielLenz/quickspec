@@ -17,12 +17,12 @@ This is originally based on the `quickspec <https://github.com/dhanson/quickspec
 Project Status
 ==============
 
-.. image:: https://travis-ci.org/dlenz/quickspec.svg?branch=master
-    :target: https://travis-ci.org/dlenz/quickspec
+.. image:: https://travis-ci.org/daniellenz/quickspec.svg?branch=master
+    :target: https://travis-ci.org/daniellenz/quickspec
     :alt: Quickspec's Travis CI Status
 
-.. image:: https://coveralls.io/repos/github/dlenz/quickspec/badge.svg?branch=master
-    :target: https://coveralls.io/github/dlenz/quickspec?branch=master
+.. image:: https://coveralls.io/repos/github/daniellenz/quickspec/badge.svg?branch=master
+    :target: https://coveralls.io/github/daniellenz/quickspec?branch=master
     :alt: Quickspec's Coveralls Status
 
 `quickspec` is still in the early-development stage. While much of the
