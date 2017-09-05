@@ -7,10 +7,6 @@ quickspec
 
 Code to estimate the angular power spectra of cosmic fields under the limber approximation.
 
-.. image:: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg?style=flat
-    :target: http://www.astropy.org
-    :alt: Powered by Astropy Badge
-
 This is originally based on the `quickspec <https://github.com/dhanson/quickspec>`_ package from Duncan Hanson. Our goal is to extend the legacy value of this package by adding tests, continuous integration, wide-ranging compatibility, and documentation.
 
 
@@ -24,6 +20,11 @@ Project Status
 .. image:: https://coveralls.io/repos/github/DanielLenz/quickspec/badge.svg?branch=master
     :target: https://coveralls.io/github/DanielLenz/quickspec?branch=master
     :alt: Quickspec's Coveralls Status
+
+
+.. image:: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg?style=flat
+    :target: http://www.astropy.org
+    :alt: Powered by Astropy Badge
 
 `quickspec` is still in the early-development stage. While much of the
 functionality is already working as intended, the API is not yet stable.
@@ -55,7 +56,7 @@ required:
 * astropy 1.3 or later (2.0 recommended)
 * scipy 0.15 or later
 * pytest 2.6 or later
-* `camb <http://camb.readthedocs.io/en/latest/`_
+* camb <http://camb.readthedocs.io/en/latest/
 
 All these packages can easily be obtained and maintained with the `anaconda python distribution <https://www.anaconda.com/download/>`_.
 
