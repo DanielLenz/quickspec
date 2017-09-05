@@ -134,11 +134,6 @@ before_install:
     - export CC=gcc-6
 
 install:
-    # Install CAMB and its python wrapper
-    - git clone https://github.com/cmbant/CAMB.git
-    - pushd CAMB && make && popd
-    - pushd CAMB/pycamb && python setup.py install && popd
-
     # We now use the ci-helpers package to set up our testing environment.
     # This is done by using Miniconda and then using conda and pip to install
     # dependencies. Which dependencies are installed using conda and pip is
@@ -161,6 +156,12 @@ install:
     # well as at the start of the install section or in the before_install
     # section if they are needed before setting up conda) to install any
     # other dependencies.
+
+    # Install CAMB and its python wrapper
+    - git clone https://github.com/cmbant/CAMB.git
+    - pushd CAMB && make && popd
+    - pushd CAMB/pycamb && python setup.py install && popd
+
 
 script:
    - $MAIN_CMD $SETUP_CMD
