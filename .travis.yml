@@ -36,13 +36,13 @@ env:
         - ASTROPY_VERSION=stable
         - MAIN_CMD='python setup.py'
         - SETUP_CMD='test'
-        - PIP_DEPENDENCIES='scipy'
+        - PIP_DEPENDENCIES='scipy '
         - EVENT_TYPE='pull_request push'
 
 
         # List other runtime dependencies for the package that are available as
         # conda packages here.
-        - CONDA_DEPENDENCIES=''
+        - CONDA_DEPENDENCIES='six'
 
         # List other runtime dependencies for the package that are available as
         # pip packages here.
