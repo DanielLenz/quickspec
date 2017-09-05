@@ -37,20 +37,20 @@ Usage
 Examples and Documentation
 --------------------------
 
-We are currently still working on the docs and they are not available yet. However, you can find some examples on how to use `quickspec` in these `notebooks <http://nbviewer.jupyter.org/github/DanielLenz/quickspec/blob/master/notebooks/index.ipynb>`_.
+We are currently still working on the docs and they are not available yet. However, you can find some examples on how to use `quickspec` in these `notebooks <http://nbviewer.jupyter.org/github/daniellenz/quickspec/blob/master/notebooks/index.ipynb>`_.
 
 Testing
 -------
 
 After installation (see below) you can test, if everything works as intended::
 
-  import quickspec
+ import quickspec
 
   quickspec.test()
 
-Alternatively, you can clone the repository and run:
+Alternatively, you can clone the repository and run::
 
-``python setup.py test``
+  python setup.py test
 
 License
 =======
