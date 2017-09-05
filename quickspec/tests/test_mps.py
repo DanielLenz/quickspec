@@ -30,7 +30,7 @@ class TestMps():
 
         assert np.isfinite(mypkz).all()
 
-        testout = np.array([[
+        reference_pkz = np.array([[
             2.04892708e+03, 2.89853948e+04, 4.04059760e+04,
             1.49465958e+03, 1.31298960e+01],
             [  2.07644068e+02, 2.94844798e+03, 4.19199487e+03,
@@ -38,4 +38,4 @@ class TestMps():
             [  2.75856778e+01, 3.95178237e+02, 5.62569607e+02,
             4.37397611e+00, 3.26512142e-03]])
 
-        testing.assert_allclose(mypkz, testout, rtol=1.e-2)
+        testing.assert_allclose(mypkz, reference_pkz, rtol=1.e-3)

@@ -31,6 +31,27 @@ functionality is already working as intended, the API is not yet stable.
 Nevertheless, we kindly invite you to use and test the library and we are
 grateful for feedback. Note, that work on the documentation is still ongoing.
 
+Usage
+=====
+
+Examples and Documentation
+--------------------------
+
+We are currently still working on the docs and they are not available yet. However, you can find some examples on how to use `quickspec` in these `notebooks <http://nbviewer.jupyter.org/github/DanielLenz/quickspec/blob/master/notebooks/index.ipynb>`_.
+
+Testing
+-------
+
+After installation (see below) you can test, if everything works as intended::
+
+  import quickspec
+
+  quickspec.test()
+
+Alternatively, you can clone the repository and run:
+
+``python setup.py test``
+
 License
 =======
 
@@ -48,15 +69,14 @@ extract (or clone from GitHub) and simply execute::
 Dependencies
 ------------
 
-We kept the dependencies as minimal as possible. The following packages are
-required:
+We kept the dependencies as minimal as possible. Aside from very conservative requirements such as numpy and scipy, `camb <http://camb.readthedocs.io/en/latest/>`_ is required to compute the matter power spectrum. The full list of the required packages is:
 
 * setuptools
 * numpy 1.11 or later
 * astropy 1.3 or later (2.0 recommended)
 * scipy 0.15 or later
 * pytest 2.6 or later
-* camb <http://camb.readthedocs.io/en/latest/
+* `camb <http://camb.readthedocs.io/en/latest/>`_
 
 All these packages can easily be obtained and maintained with the `anaconda python distribution <https://www.anaconda.com/download/>`_.
 
