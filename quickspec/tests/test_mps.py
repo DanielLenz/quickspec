@@ -28,6 +28,8 @@ class TestMps():
         zz = [0, 3, 10]
         mypkz = np.array([self.mymps.p_kz(kk, z=z) for z in zz])
 
+        assert np.isfinite(mypkz).all()
+
         testout = np.array([[
             2.04892708e+03, 2.89853948e+04, 4.04059760e+04,
             1.49465958e+03, 1.31298960e+01],
@@ -36,4 +38,4 @@ class TestMps():
             [  2.75856778e+01, 3.95178237e+02, 5.62569607e+02,
             4.37397611e+00, 3.26512142e-03]])
 
-        testing.assert_array_almost_equal(mypkz, testout, decimal=3)
+        testing.assert_array_almost_equal(mypkz, testout, decimal=2)

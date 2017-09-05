@@ -35,3 +35,34 @@ License
 
 This project is Copyright (c) Daniel Lenz and licensed under the terms of the
 BSD 3-Clause license. See the licenses folder for more information.
+
+Installation
+============
+
+For now, the installation is only possible from source. Download the tar.gz-file,
+extract (or clone from GitHub) and simply execute::
+
+    python setup.py install
+
+Dependencies
+------------
+
+We kept the dependencies as minimal as possible. The following packages are
+required:
+
+* setuptools
+* numpy 1.11 or later
+* astropy 1.3 or later (2.0 recommended)
+* scipy 0.15 or later
+* pytest 2.6 or later
+* `camb <http://camb.readthedocs.io/en/latest/`_
+
+All these packages can easily be obtained and maintained with the `anaconda python distribution <https://www.anaconda.com/download/>`_.
+
+Who do I talk to?
+=================
+
+If you encounter any problems or have questions, do not hesitate to raise an
+issue or make a pull request. Moreover, you can contact the devs directly:
+
+- *mail@daniellenz.org*
