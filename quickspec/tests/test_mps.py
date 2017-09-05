@@ -38,4 +38,4 @@ class TestMps():
             [  2.75856778e+01, 3.95178237e+02, 5.62569607e+02,
             4.37397611e+00, 3.26512142e-03]])
 
-        testing.assert_allclose(mypkz, testout)
+        testing.assert_allclose(mypkz, testout, rtol=1.e-2)
