@@ -5,6 +5,7 @@ from Hall et. al. 2010 (arxiv:0912.4315)
 """
 
 import numpy as np
+from scipy import constants as sc
 
 from .. import units
 
@@ -54,38 +55,84 @@ def jbar(
 
 
 class ssed_kern():
-    def __init__(self, nu, b=1.0, jbar_kwargs={}, ssed_kwargs={}):
+    """
+    CIB kernel $W^{\nu}$, given by Hall et. al. Eq. 5:
+    $Cl = \int dz 1/H(z)/\chi(z)^2 (a\,b j(\nu, z))^2 P_{lin}(l/\chi,z)$
+
+    For the bias $b$, we support a redshift dependence as
+    $b_G = b_0 + b_1 z + b_2 z^2$.
+    Furthermore, we provide a scale-dependent correction to that bias term,
+    $b_{\rm eff} = b_G + b_{\rm corr}$. The correction term $b_{\rm corr}$ is
+    taken from Eq. (1) of De Putter+ (2014) and scales with the amplitude
+    of the primordial non-Gaussianity $f_{NL}$.
+    """
+
+
+    _b_G = None
+
+    def __init__(
+            self, nu,
+            b0=1.0, b1=0., b2=0.,
+            fnl=0., jbar_kwargs={}, ssed_kwargs={}):
+
         self.nu = nu
-        self.b = b
-        self.jbar_kwargs = jbar_kwargs
-        self.ssed_kwargs = ssed_kwargs
 
-    def w_lxz(self, l, x, z):
-        """
-        Ref: Hall et. al. Eq. 5:
-        Cl = int dz 1/H(z)/chi(z)^2 (ab j(\nu, z))^2 P_lin(l/chi,z)
-
-        """
-        return (
-            1. / (1. + z) * self.b * jbar(
-                self.nu, z, x,
-                ssed_kwargs=self.ssed_kwargs, **self.jbar_kwargs))
-
-class ssed_kern_z():
-    def __init__(self, nu, b0=1.0, b1=1.0, jbar_kwargs={}, ssed_kwargs={}):
-        self.nu = nu
+        # bias terms
+        # the effective redshift dependent bias term is
+        # b = b0 + b1*z + b2*z^2
         self.b0 = b0
         self.b1 = b1
+        self.b2 = b2
+
+        # non-gaussianity
+        if fnl < 0.:
+            raise ValueError('fnl must be >= 0.')
+        self.fnl = fnl
+
+        # kwargs for the jbar and ssed term
         self.jbar_kwargs = jbar_kwargs
         self.ssed_kwargs = ssed_kwargs
 
+    def get_b_eff(self, l, x, z):
+        if self.fnl == 0.:
+            b_k = 0.
+        else:
+            b_k = self.get_b_k(l, x, z)
+
+        b_G = self.b0 + self.b1 * z + self.b2 * z * z
+        b_eff = b_G + b_k
+        return b_eff
+
+
+    def get_b_G(self, z):
+        b_G = self.b0 + self.b1 * z + self.b2 * z * z
+        return b_G
+
+    def get_b_k(self, l, x, z):
+        """
+        Scale-dependent correction to the linear halo bias, taken from
+        De Putter+ (2014)
+        """
+        #
+        # delta_c = 1.686  # critical overdensity
+        # b_G = self.get_b_G(z)
+        #
+        # b_k = (
+        #     b_G +
+        #     self.fnl * (b_G - 1.) * delta_c * 3. * self.cosmo.omm *
+        #     self.cosmo.H0**2 / (sc.c / 1.e3)**2 / k**2 / Tk / G(z))
+        #
+        # return b_k
+
+
+
     def w_lxz(self, l, x, z):
         """
-        Ref: Hall et. al. Eq. 5:
-        Cl = int dz 1/H(z)/chi(z)^2 (ab j(\nu, z))^2 P_lin(l/chi,z)
+        The actual CIB kernel W
 
         """
+
         return (
-            1. / (1. + z) * (self.b0 + self.b1 * z) * jbar(
+            1. / (1. + z) * self.get_b_eff(l, x, z) * jbar(
                 self.nu, z, x,
                 ssed_kwargs=self.ssed_kwargs, **self.jbar_kwargs))
