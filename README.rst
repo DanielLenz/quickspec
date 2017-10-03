@@ -44,7 +44,7 @@ Testing
 
 After installation (see below) you can test, if everything works as intended::
 
- import quickspec
+  import quickspec
 
   quickspec.test()
 

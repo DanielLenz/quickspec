@@ -70,3 +70,22 @@ class ssed_kern():
             1. / (1. + z) * self.b * jbar(
                 self.nu, z, x,
                 ssed_kwargs=self.ssed_kwargs, **self.jbar_kwargs))
+
+class ssed_kern_z():
+    def __init__(self, nu, b0=1.0, b1=1.0, jbar_kwargs={}, ssed_kwargs={}):
+        self.nu = nu
+        self.b0 = b0
+        self.b1 = b1
+        self.jbar_kwargs = jbar_kwargs
+        self.ssed_kwargs = ssed_kwargs
+
+    def w_lxz(self, l, x, z):
+        """
+        Ref: Hall et. al. Eq. 5:
+        Cl = int dz 1/H(z)/chi(z)^2 (ab j(\nu, z))^2 P_lin(l/chi,z)
+
+        """
+        return (
+            1. / (1. + z) * (self.b0 + self.b1 * z) * jbar(
+                self.nu, z, x,
+                ssed_kwargs=self.ssed_kwargs, **self.jbar_kwargs))
