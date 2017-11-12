@@ -22,8 +22,8 @@ addons:
             - graphviz
             - texlive-latex-extra
             - dvipng
-            # - gfortran-6
-            # - gcc-6
+            - gfortran-6
+            - gcc-6
 
 env:
     global:
@@ -128,10 +128,10 @@ matrix:
           env: MAIN_CMD='pycodestyle quickspec --count' SETUP_CMD=''
 
 before_install:
-    # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; fi
-    # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo ln -s /usr/bin/gfortran-6 /usr/local/bin/gfortran; fi
-    # - export FC=gfortran-6
-    # - export CC=gcc-6
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo ln -s /usr/bin/gfortran-6 /usr/local/bin/gfortran; fi
+    - export FC=gfortran-6
+    - export CC=gcc-6
 
 install:
     # We now use the ci-helpers package to set up our testing environment.
