@@ -33,6 +33,7 @@ class mps_lin_camb(mps.mps_lin):
             raise
 
         self.cosmo = cosmo
+        self.sips = sips
         # Define the model parameters
         par = camb.model.CAMBparams()
         par.H0 = cosmo.H0

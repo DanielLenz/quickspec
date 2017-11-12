@@ -73,9 +73,10 @@ class ssed_kern():
     def __init__(
             self, nu,
             b0=1.0, b1=0., b2=0.,
-            fnl=0., jbar_kwargs={}, ssed_kwargs={}):
+            fnl=0., mps=None, jbar_kwargs={}, ssed_kwargs={}):
 
         self.nu = nu
+        self.mps = mps
 
         # bias terms
         # the effective redshift dependent bias term is
@@ -94,13 +95,19 @@ class ssed_kern():
         self.ssed_kwargs = ssed_kwargs
 
     def get_b_eff(self, l, x, z):
+
+        b_G = self.get_b_G(z)
+
+        # Scale-dependent correction for fnl > 0
         if self.fnl == 0.:
             b_k = 0.
         else:
-            b_k = self.get_b_k(l, x, z)
+            b_k = self.get_b_k(l, x, z, b_G)
 
-        b_G = self.b0 + self.b1 * z + self.b2 * z * z
+        # The effective bias is the sum of the simple redshift-dependent bias
+        # and the scale-dependent correction
         b_eff = b_G + b_k
+
         return b_eff
 
 
@@ -108,21 +115,23 @@ class ssed_kern():
         b_G = self.b0 + self.b1 * z + self.b2 * z * z
         return b_G
 
-    def get_b_k(self, l, x, z):
+    def get_b_k(self, l, x, z, b_G):
         """
         Scale-dependent correction to the linear halo bias, taken from
         De Putter+ (2014)
         """
-        #
-        # delta_c = 1.686  # critical overdensity
-        # b_G = self.get_b_G(z)
-        #
-        # b_k = (
-        #     b_G +
-        #     self.fnl * (b_G - 1.) * delta_c * 3. * self.cosmo.omm *
-        #     self.cosmo.H0**2 / (sc.c / 1.e3)**2 / k**2 / Tk / G(z))
-        #
-        # return b_k
+
+        k = l / x
+
+        delta_c = 1.686  # critical overdensity
+
+        b_k = (
+            b_G +
+            self.fnl * (b_G - 1.) * delta_c * 3. * self.mps.cosmo.omm *
+            self.mps.cosmo.H0**2 / (sc.c / 1.e3)**2 / k**2 / self.mps.T_k(k) /
+            self.mps.cosmo.G_z(z))
+
+        return b_k
 
 
 

@@ -30,10 +30,13 @@ class initial_ps(object):
         self.n_r = n_r
         self.k_pivot = k_pivot
 
-    def p(self, k):
+    def deltasq_k(self, k):
         return (
             self.amp * np.exp((self.n_s - 1.) * np.log(k / self.k_pivot) +
             0.5 * self.n_r * np.log(k / self.k_pivot)**2))
+
+    def pR_k(self, k):
+        return 2. * np.pi**2. / k**3. * self.deltasq_k(k)
 
 
 class mps():
@@ -162,6 +165,13 @@ class mps():
             self.cl_limber_zl(l, k1, k2, zmin, zmax) for l in ls])
 
         return powerspec
+
+
+    def T_k(self, k):
+        T_k = np.sqrt(self.p_kz(k, z=0) / self.sips.pR_k(k)) / k**2
+        T_k /= T_k.max()  # normalize to 1
+
+        return T_k
 
 
 class mps_lin(mps):

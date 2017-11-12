@@ -137,7 +137,7 @@ class lcdm():
             Gz = 2.5 * self.omm * self.H_a(1. / (1. + z)) / self.H0 * integral
             return Gz
         else:
-            return [self.G_z(tz) for tz in z]
+            return np.array([self.G_z(tz) for tz in z])
 
     def G_x(self, x):
         """
