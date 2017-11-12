@@ -22,8 +22,8 @@ addons:
             - graphviz
             - texlive-latex-extra
             - dvipng
-            - gfortran-6
-            - gcc-6
+            # - gfortran-6
+            # - gcc-6
 
 env:
     global:
@@ -36,7 +36,7 @@ env:
         - ASTROPY_VERSION=stable
         - MAIN_CMD='python setup.py'
         - SETUP_CMD='test'
-        - PIP_DEPENDENCIES='scipy '
+        - PIP_DEPENDENCIES='scipy camb'
         - EVENT_TYPE='pull_request push'
 
 
@@ -128,10 +128,10 @@ matrix:
           env: MAIN_CMD='pycodestyle quickspec --count' SETUP_CMD=''
 
 before_install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; fi
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo ln -s /usr/bin/gfortran-6 /usr/local/bin/gfortran; fi
-    - export FC=gfortran-6
-    - export CC=gcc-6
+    # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc; fi
+    # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo ln -s /usr/bin/gfortran-6 /usr/local/bin/gfortran; fi
+    # - export FC=gfortran-6
+    # - export CC=gcc-6
 
 install:
     # We now use the ci-helpers package to set up our testing environment.
@@ -158,9 +158,9 @@ install:
     # other dependencies.
 
     # Install CAMB and its python wrapper
-    - git clone https://github.com/cmbant/CAMB.git
-    - pushd CAMB && make && popd
-    - pushd CAMB/pycamb && python setup.py install && popd
+    # - git clone https://github.com/cmbant/CAMB.git
+    # - pushd CAMB && make && popd
+    # - pushd CAMB/pycamb && python setup.py install && popd
 
 
 script:
