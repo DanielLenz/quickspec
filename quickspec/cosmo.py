@@ -36,8 +36,8 @@ class LCDM():
 
         # redshift vector
         self.zvec = np.concatenate([
-            np.linspace(0., 20., 500., endpoint=False),
-            np.linspace(20., 200., 200., endpoint=False),
+            np.linspace(0., 20., 500, endpoint=False),
+            np.linspace(20., 200., 200, endpoint=False),
             np.linspace(200., 1500., 100)])
 
         # vector of comoving distance
@@ -87,7 +87,10 @@ class LCDM():
         assert(np.all(z >= self.zmin))
         assert(np.all(z <= self.zmax))
 
-        return self.spl_x_z(z)
+        xvec = self.spl_x_z(z)
+        xvec = np.clip(xvec, a_min=0, a_max=None)
+
+        return xvec
 
     def z_x(self, x):
         """
@@ -97,7 +100,11 @@ class LCDM():
 
         assert(np.all(x >= self.xmin))
         assert(np.all(x <= self.xmax))
-        return self.spl_z_x(x)
+
+        zvec = self.spl_z_x(x)
+        zvec = np.clip(zvec, a_min=0, a_max=None)
+
+        return zvec
 
     def H_a(self, a):
         """
