@@ -4,7 +4,7 @@ from scipy import interpolate, integrate
 from . import units
 
 
-class lcdm():
+class LCDM():
     """
     Class to encapsulate a flat, lambda-cold-dark-matter (lcdm) cosmology.
 
@@ -175,3 +175,14 @@ class lcdm():
         """
 
         return 1. / (self.oml / self.omm)**(1. / 3.)
+
+
+class Planck15(LCDM):
+    def __init__(self, omr=0.0, omb=0.0486, omc=0.2589, oml=0.6925, H0=67.7):
+
+        super(Planck15, self).__init__(
+            omr=omr,
+            omb=omb,
+            omc=omc,
+            oml=oml,
+            H0=H0)
