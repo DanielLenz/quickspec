@@ -10,9 +10,6 @@ class LCDM():
 
     """
 
-    _spl_x_z = None
-    _spl_z_x = None
-
     def __init__(self, omr=0.0, omb=0.05, omc=0.25, oml=0.7, H0=70.):
         """
         Initialize the flat lcdm cosmology. parameters:
@@ -23,11 +20,15 @@ class LCDM():
                * H0  = hubble constant (km/s/Mpc).
 
        """
+        # Initiate properties
+        self._spl_x_z = None
+        self._spl_z_x = None
 
         # check for flatness
         if not ((omb + omc + omr + oml) == 1.0):
             raise ValueError('Sum of densities must be equal to 1.')
 
+        # Standard cosmological parameters
         self.omr = omr  # radiation
         self.omb = omb  # baryons
         self.omc = omc  # CDM
@@ -37,13 +38,13 @@ class LCDM():
 
         self.omm = omb + omc  # total matter density
 
-        # redshift vector
+        # Redshift vector
         self.zvec = np.concatenate([
             np.linspace(0., 20., 500, endpoint=False),
             np.linspace(20., 200., 200, endpoint=False),
             np.linspace(200., 1500., 100)])
 
-        # vector of comoving distance
+        # Vector of comoving distance
         self.xvec = np.array([
             integrate.quad(
                 lambda z: (units.c * 1.e-3) / self.H_z(z), 0., zmax)[0]
@@ -56,7 +57,7 @@ class LCDM():
 
     @property
     def spl_x_z(self):
-        if self._spl.x_z is None:
+        if self._spl_x_z is None:
             self._spl_x_z = interpolate.UnivariateSpline(
                 self.zvec, self.xvec, k=3, s=0)
 
@@ -64,13 +65,11 @@ class LCDM():
 
     @property
     def spl_z_x(self):
-        if self._spl.x_z is None:
+        if self._spl_z_x is None:
             self._spl_z_x = interpolate.UnivariateSpline(
                 self.xvec, self.zvec, k=3, s=0)
 
         return self._spl_z_x
-
-
 
     def t_z(self, z):
         """

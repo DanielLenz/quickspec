@@ -109,14 +109,18 @@ class mps():
         from conformal distance xmin to xmax (both in Mpc).
 
         """
-        if k2 is None:
-            k2 = k1
+
 
         def integrand(x):
             z = self.cosmo.z_x(x)
+            k1_lxz = k1.w_lxz(l, x, z)
+            if k2 is None:
+                k2_lxz = k1_lxz
+            else:
+                k2_lxz = k1.w_lxz(l, x, z)
+
             return (
-                1. / x**2 * k1.w_lxz(l, x, z) *
-                k2.w_lxz(l, x, z) * self.p_kz(l / x, z))
+                1. / x**2 * k1_lxz * k2_lxz * self.p_kz(l / x, z))
 
         return integrate.quad(integrand, xmin, xmax, limit=100)[0]
 
