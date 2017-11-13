@@ -10,6 +10,9 @@ class LCDM():
 
     """
 
+    _spl_x_z = None
+    _spl_z_x = None
+
     def __init__(self, omr=0.0, omb=0.05, omc=0.25, oml=0.7, H0=70.):
         """
         Initialize the flat lcdm cosmology. parameters:
@@ -51,11 +54,23 @@ class LCDM():
         self.xmin = np.min(self.xvec)
         self.xmax = np.max(self.xvec)
 
-        # conversions between conformal distance to redshift
-        self.spl_x_z = interpolate.UnivariateSpline(
-            self.zvec, self.xvec, k=3, s=0)
-        self.spl_z_x = interpolate.UnivariateSpline(
-            self.xvec, self.zvec, k=3, s=0)
+    @property
+    def spl_x_z(self):
+        if self._spl.x_z is None:
+            self._spl_x_z = interpolate.UnivariateSpline(
+                self.zvec, self.xvec, k=3, s=0)
+
+        return self._spl_x_z
+
+    @property
+    def spl_z_x(self):
+        if self._spl.x_z is None:
+            self._spl_z_x = interpolate.UnivariateSpline(
+                self.xvec, self.zvec, k=3, s=0)
+
+        return self._spl_z_x
+
+
 
     def t_z(self, z):
         """
