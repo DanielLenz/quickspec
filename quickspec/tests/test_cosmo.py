@@ -3,10 +3,20 @@ from numpy import testing
 
 from quickspec import cosmo
 
+class TestPlanck15():
+    planck15 = cosmo.Planck15()
+
+    def test_initvals(self):
+        assert self.planck15.omr == 0.
+        assert self.planck15.omb == 0.0486
+        assert self.planck15.omc == 0.2589
+        assert self.planck15.oml == 0.6925
+        assert self.planck15.H0 == 67.7
+
 
 class TestLCDM():
 
-    lcdm = cosmo.lcdm()
+    lcdm = cosmo.LCDM()
 
     def test_initvals(self):
         assert self.lcdm.omr == 0.
@@ -31,6 +41,16 @@ class TestLCDM():
         # z to x
         testing.assert_almost_equal(self.lcdm.z_x(100), 0.023474157001465847)
         testing.assert_almost_equal(self.lcdm.z_x(13.e3), 182.38416105113538)
+
+        # Circular
+        zvec = np.concatenate([
+            np.linspace(0., 20., 500, endpoint=False),
+            np.linspace(20., 200., 200, endpoint=False),
+            np.linspace(200., 1500., 100)])
+
+        testing.assert_array_almost_equal(
+            zvec,
+            self.lcdm.z_x(self.lcdm.x_z(zvec)))
 
     def test_H(self):
         # H_a

@@ -105,7 +105,7 @@ class mps():
     def cl_limber_xl(self, l, k1, k2=None, xmin=0.0, xmax=13000.):
         """
         Calculate the cross-spectrum at multipole l between kernels k1 and
-        k2 in the limber approximation. The distance integral is performed
+        k2 in the Limber approximation. The distance integral is performed
         from conformal distance xmin to xmax (both in Mpc).
 
         """
@@ -137,7 +137,7 @@ class mps():
     def cl_limber_zl(self, l, k1, k2=None, zmin=0.0, zmax=1100.):
         """
         Calculate the cross-spectrum at multipole l between kernels k1 and k2
-        in the limber approximation. The distance integral is performed from
+        in the Limber approximation. The distance integral is performed from
         redshifts zmin to zmax.
 
         """

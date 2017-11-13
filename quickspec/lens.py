@@ -5,7 +5,7 @@ class kern():
     def __init__(self, cosmo):
         self.cosmo = cosmo
 
-        # distance to the last scattering surface in Mpc
+        # Distance to the last scattering surface in Mpc
         self.xlss = cosmo.x_z(1100.)
 
         self.cfac = 3. * cosmo.omm * (cosmo.H0 * 1.e3 / units.c)**2
