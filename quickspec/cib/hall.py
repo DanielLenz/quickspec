@@ -18,9 +18,8 @@ def ssed_graybody(nu, Td=34., beta=2):
 
 
 def ssed(nu, Td=34., beta=2., alpha_mid_ir=alpha_mid_ir, nu_mid_ir=nu_mid_ir):
-    """
-    Calculation of the SSED f_{\nu} defined between pages 4 and 5 of
-    Hall et al.
+    """Calculation of the SSED f_{\nu} defined between pages 4 and 5 of
+    Hall et al. (2010).
 
     """
 
@@ -43,11 +42,8 @@ def ssed(nu, Td=34., beta=2., alpha_mid_ir=alpha_mid_ir, nu_mid_ir=nu_mid_ir):
 def jbar(
         nu, z, x, zc=2., sigmaz=2.,
         norm=7.5374829969423142e-15, ssed_kwargs={}):
-    """
-    Eq. 10 of Hall et. al. nu in Hz, returns in Jansky.
+    """Eq. 10 of Hall et al. (2010) nu in Hz, returns in Jansky."""
 
-    """
-    # a * \chi^2 * exp( - (z-zc)/2/\sigma_z^2) f_{nu (1+z)}
 
     return (
         1. / (1. + z) * x**2 * np.exp(-(z - zc)**2 / (2. * sigmaz**2)) *
@@ -116,9 +112,8 @@ class ssed_kern():
         return b_G
 
     def get_b_k(self, l, x, z, b_G):
-        """
-        Scale-dependent correction to the linear halo bias, taken from
-        De Putter+ (2014)
+        """Scale-dependent correction to the linear halo bias, taken from
+        De Putter+ (2014).
         """
 
         k = l / x
@@ -136,8 +131,7 @@ class ssed_kern():
 
 
     def w_lxz(self, l, x, z):
-        """
-        The actual CIB kernel W
+        """The actual CIB kernel W
 
         """
 
