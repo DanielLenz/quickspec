@@ -1,3 +1,5 @@
+import warnings
+
 import numpy as np
 from scipy import interpolate, integrate
 
@@ -102,7 +104,11 @@ class LCDM():
         assert(np.all(z <= self.zmax))
 
         xvec = self.spl_x_z(z)
-        xvec = np.clip(xvec, a_min=0, a_max=None)
+        if (xvec < 0.).any():
+            warnings.warn(
+                'Conversion from z to x resulted in values smaller\
+                than zero, setting these to zero.')
+            xvec = np.clip(xvec, a_min=0., a_max=None)
 
         return xvec
 
@@ -116,7 +122,12 @@ class LCDM():
         assert(np.all(x <= self.xmax))
 
         zvec = self.spl_z_x(x)
-        zvec = np.clip(zvec, a_min=0, a_max=None)
+
+        if (zvec < 0.).any():
+            warnings.warn(
+                'Conversion from x to z resulted in values smaller\
+                than zero, setting these to zero.')
+            zvec = np.clip(zvec, a_min=0., a_max=None)
 
         return zvec
 
